@@ -1,6 +1,13 @@
 const express = require('express')
+const morgan = require('morgan')
+
 const app = express()
 
+morgan.token('phonebook', function (req, res) {
+    return (req.method === 'POST') ? JSON.stringify(req.body) : ''
+})
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :phonebook'))
 app.use(express.json())
 
 let persons = [{
@@ -31,10 +38,10 @@ const getDate = () => {
     const weekNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
-    ];
+    ]
 
-    const d = new Date();
-    const weekName = weekNames[d.getDay()];
+    const d = new Date()
+    const weekName = weekNames[d.getDay()]
     const monthName = monthNames[d.getMonth()]
     const day = d.getDate()
     const year = d.getFullYear()
