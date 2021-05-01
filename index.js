@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 let persons = [{
         "id": 1,
         "name": "Arto Hellas",
@@ -25,7 +27,6 @@ let persons = [{
     }
 ]
 
-// weekday month day year time GMT
 const getDate = () => {
     const weekNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -51,6 +52,17 @@ app.get('/api/info', (request, response) => {
     const returnData = length > 0 ? 'Phonebook has information on ' + persons.length + ' people\n' : ''
 
     response.send(returnData.concat(getDate()))
+})
+
+app.get('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const person = persons.find(person => person.id === id)
+
+    if (person) {
+        response.json(person)
+    } else {
+        response.status(404).end()
+    }
 })
 
 const PORT = 3001
