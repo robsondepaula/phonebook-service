@@ -1,0 +1,14 @@
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "test invalid input"
+}
+######
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Aya Koji",
+    "number": "55-23-6423122"
+}
