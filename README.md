@@ -1,9 +1,9 @@
 # Phonebook service
 
-Following the course instructions for exercises 3.1-3.X.
+Following the course instructions for exercises 3.1-3.22.
 
 ## Deployed to Heroku
 
-Service at https://peaceful-dawn-75757.herokuapp.com/api/persons
+Backend serving at https://peaceful-dawn-75757.herokuapp.com/api/persons
 
-UI at https://peaceful-dawn-75757.herokuapp.com/
+Frontend at https://peaceful-dawn-75757.herokuapp.com/

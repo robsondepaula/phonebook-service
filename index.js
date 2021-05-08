@@ -6,7 +6,7 @@ const Person = require('./models/person')
 
 const app = express()
 
-morgan.token('phonebook', function (req, res) {
+morgan.token('phonebook', function (req) {
     return (req.method === 'POST') ? JSON.stringify(req.body) : ''
 })
 
@@ -16,9 +16,9 @@ app.use(cors())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :phonebook'))
 
 const getDate = () => {
-    const weekNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
+    const weekNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
     ]
 
     const d = new Date()
@@ -58,7 +58,7 @@ app.get('/api/persons/:id', (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndRemove(request.params.id)
-        .then(result => {
+        .then(() => {
             response.status(204).end()
         })
         .catch(error => next(error))
@@ -67,7 +67,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
 app.post('/api/persons', (request, response, next) => {
     const body = request.body
 
-    person = new Person({
+    const person = new Person({
         name: body.name,
         number: body.number
     })
@@ -95,8 +95,6 @@ app.put('/api/persons/:id', (request, response, next) => {
 })
 
 const errorHandler = (error, request, response, next) => {
-    console.error(error.message)
-
     if (error.name === 'CastError') {
         return response.status(400).send({
             error: 'malformatted id'
